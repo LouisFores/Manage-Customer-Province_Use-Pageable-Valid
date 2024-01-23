@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"v xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <meta charset="UTF-8">
+    <title>Create Provice</title>
+</head>
+<body>
+<h3>Add Provice</h3>
+<p>
+    <a th:href="@{/provices}">Back to provice list</a>
+</p>
+<div id="form">
+    <form th:action="@{/provices/create}" method="post" th:object="${provice}" novalidate="novalidate">
+        <input type="hidden" th:field="*{id}">
+        <div>
+            <label>Name</label>
+            <input type="text" id="name" th:field="*{name}"/>
+        </div>
+        <input type="submit" value="Save"/>
+    </form>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

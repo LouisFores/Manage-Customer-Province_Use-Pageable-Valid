@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"v xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+
+    <meta charset="UTF-8">
+    <title>Customer</title>
+</head>
+<body>
+<h3>Customers</h3>
+<p>
+    <a th:href="@{/customers/create}">Create new Customer</a>
+</p>
+<p><a th:href="@{/provices}">List provices</a></p>
+<div>
+    <label>Tìm kiếm theo tên</label>
+    <form th:action="@{/customers/search}" method="post">
+        <label><input type="text" name="search"></label>
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<div>
+    <label>Tìm kiếm theo tuổi</label>
+    <form th:action="@{/customers/searchAge}" method="post">
+        <label><input type="text" name="searchAge"></label>
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<div class="notify">
+    <div th:if="${message}">
+        <span th:text="${message}"></span>
+    </div>
+</div>
+<table id="customers">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Full Name</th>
+        <th>Age</th>
+        <th>Provice</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c,cStatus : ${customers}">
+        <td th:text="${cStatus.count}"></td>
+        <td th:text="${c.getFullName()}"></td>
+        <td th:text="${c.getAge()}"></td>
+        <td th:text="${c.getProvice().getName()}"></td>
+        <td><a th:href="@{/customers/update/{id}(id=${c.getId()})}">update</a></td>
+        <td><a th:href="@{/customers/delete/{id}(id=${c.getId()})}">delete</a></td>
+    </tr>
+    </tbody>
+</table>
+<!--<a class="btn btn-primary" th:if="${customers.hasPrevious()}" th:href="@{/customers/(page=${customers.number - 1})|}">Previous</a>-->
+<!--<span th:text="${customers.number + 1}"></span> | <span th:utext="${customers.totalPages}"></span>-->
+<!--<a class="btn btn-primary" th:if="${customers.hasNext()}" th:href="@{/customers/(page=${customers.number + 1})|}">Next</a>-->
+
+<a class="btn btn-primary" th:if="${customers.hasPrevious()}" th:href="@{/customers(page=${customers.number - 1})}">Previous</a>
+<span th:text="${customers.number + 1}"></span> | <span th:text="${customers.totalPages}"></span>
+<a class="btn btn-primary" th:if="${customers.hasNext()}" th:href="@{/customers(page=${customers.number + 1})}">Next</a>
+
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
